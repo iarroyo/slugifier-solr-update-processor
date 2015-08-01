@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="example" version="1.5">
+	<!-- MODEL -->
+	<field name="id" type="string" indexed="true" stored="true" />
+	<field name="status" type="string" indexed="true" stored="true" />
+	<field name="vehicle_type" type="string" indexed="true" stored="true" />
+	<field name="make_id" type="string" indexed="true" stored="true" />
+	<!-- autocomplete -->
+	<field name="model_series" type="string" indexed="true" stored="true" />
+	<field name="model_name" type="string" indexed="true" stored="true" />
+	<field name="name_suggestion" type="text_suggestion" indexed="true"
+		stored="true" />
+	<field name="name_lowercase" type="text_lowercase" indexed="true"
+		stored="true" />
+	<!-- autocomplete -->
+	<field name="cname" type="string" indexed="true" stored="true" />
+	<!-- change stored to false -->
+	<field name="synonyms" type="string" indexed="true" stored="true"
+		multiValued="true" />
+	<field name="page_url" type="string" indexed="true" stored="true" />
+	<field name="profile_photo" type="string" indexed="true" stored="true"
+		multiValued="true" />
+	<field name="profile_photo_url" type="string" indexed="true"
+		stored="true" multiValued="true" />
+	<field name="model_url" type="string" indexed="yes" stored="true" />
+	<field name="nada_url" type="string" indexed="true" stored="true" />
+	<field name="main_category" type="string" indexed="yes" stored="true" />
+	<field name="secondary_category" type="string" indexed="yes"
+		stored="true" multiValued="true" />
+	<field name="specs_length_ft" type="string" indexed="yes" stored="true" />
+	<field name="specs_length_in" type="string" indexed="yes" stored="true" />
+	<field name="specs_beam_ft" type="string" indexed="yes" stored="true" />
+	<field name="specs_beam_in" type="string" indexed="yes" stored="true" />
+	<field name="specs_dry_weight" type="string" indexed="yes"
+		stored="true" />
+	<field name="specs_seating_capacity" type="string" indexed="yes"
+		stored="true" />
+	<field name="specs_deadrise_at_transom_ft" type="string" indexed="yes"
+		stored="true" />
+	<field name="engine_displacement" type="string" indexed="yes"
+		stored="true" />
+	<field name="displacement_cc" type="string" indexed="yes" stored="true" />
+	<field name="engine_engine_stroke" type="string" indexed="yes"
+		stored="true" />
+	<field name="engine_cylinders" type="string" indexed="yes"
+		stored="true" />
+	<field name="engine_type" type="string" indexed="yes" stored="true" />
+	<field name="carburatean_type" type="string" indexed="yes"
+		stored="true" />
+	<field name="fuel_type" type="string" indexed="yes" stored="true" />
+	<field name="engine_speeds" type="string" indexed="yes" stored="true" />
+	<field name="exterior_color" type="string" indexed="yes" stored="true"
+		multiValued="true" />
+	<field name="interior_color" type="string" indexed="yes" stored="true"
+		multiValued="true" />
+	<field name="oldest_model_year" type="string" indexed="yes"
+		stored="true" />
+	<field name="newest_model_year" type="string" indexed="yes"
+		stored="true" />
+	<field name="warranty" type="string" indexed="true" stored="true" />
+	<field name="notes" type="string" indexed="yes" stored="true"
+		multiValued="true" />
+	<field name="overview" type="string" indexed="yes" stored="true" />
+	<field name="business_email" type="string" indexed="yes" stored="true" />
+	<field name="make_photo" type="string" indexed="true" stored="true"
+		multiValued="true" />
+	<field name="make_photo_url" type="string" indexed="true" stored="true"
+		multiValued="true" />
+	<field name="brochure_url" type="string" indexed="yes" stored="true"
+		multiValued="true" />
+	<field name="manual_url" type="string" indexed="yes" stored="true"
+		multiValued="true" />
+	<field name="floorplan_url" type="string" indexed="yes" stored="true"
+		multiValued="true" />
+	<field name="floorplan_caption" type="string" indexed="yes"
+		stored="true" />
+	<field name="date_created" type="tdate" indexed="true" stored="true" />
+	<field name="date_updated" type="tdate" indexed="true" stored="true" />
+
+	<!-- Solr Default fields -->
+	<field name="_version_" type="long" indexed="true" stored="true" />
+	<field name="_root_" type="string" indexed="true" stored="true" />
+
+	<uniqueKey>id</uniqueKey>
+
+	<copyField source="model_name" dest="name_suggestion" />
+	<copyField source="model_name" dest="name_lowercase" />
+
+	<fieldType name="string" class="solr.StrField"
+		sortMissingLast="true" />
+	<fieldType name="boolean" class="solr.BoolField"
+		sortMissingLast="true" />
+	<fieldType name="int" class="solr.TrieIntField"
+		precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="float" class="solr.TrieFloatField"
+		precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="long" class="solr.TrieLongField"
+		precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="double" class="solr.TrieDoubleField"
+		precisionStep="0" positionIncrementGap="0" />
+	<!-- A Trie based date field for faster date range queries and date faceting. -->
+	<fieldType name="tdate" class="solr.TrieDateField"
+		precisionStep="6" positionIncrementGap="0" />
+	<fieldType name="tlong" class="solr.TrieLongField"
+		precisionStep="8" positionIncrementGap="0" />
+
+	<fieldType name="date" class="solr.TrieDateField"
+		precisionStep="0" positionIncrementGap="0" />
+	<fieldtype name="ignored" stored="false" indexed="false"
+		multiValued="true" class="solr.StrField" />
+
+	<fieldType name="text_suggestion" class="solr.TextField"
+		positionIncrementGap="100">
+		<analyzer type="index">
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.WordDelimiterFilterFactory"
+				preserveOriginal="1" />
+			<filter class="solr.LowerCaseFilterFactory" />
+			<filter class="solr.EdgeNGramFilterFactory" minGramSize="1"
+				maxGramSize="30" />
+		</analyzer>
+		<analyzer type="query">
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
+
+	<fieldType name="text_lowercase" class="solr.TextField"
+		positionIncrementGap="100">
+		<analyzer type="index">
+			<tokenizer class="solr.KeywordTokenizerFactory" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+		<analyzer type="query">
+			<tokenizer class="solr.KeywordTokenizerFactory" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
+
+</schema>
