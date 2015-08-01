@@ -1,0 +1,1 @@
+# slugifier-solr-update-processor
